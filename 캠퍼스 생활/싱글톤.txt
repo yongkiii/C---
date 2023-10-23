@@ -1,0 +1,76 @@
+﻿
+//내부 개체에는 카메라에 장착한 메모리 카드를 설정하는 메서드, 
+카메라로 찍은 사진을 메모리 카드에 보관하는 메서드, 
+메모리 카드에 보관된 전체 사진의 개수 및 현재 보고 있는 사진의 번호 등을 확인하기 위한 메서드와 속성들을 제공할 것입니다.
+
+텅 빈 다이아몬드 = 있을 수도 있고 없을 수도 있고
+꽉 찬 다이아모든 = 무조건 있어야한다.
+
+
+namespace Singleton
+{
+    class InnerObject //단일체 클래스
+    {
+        MemoryCard memorycard =null;
+        public int Now
+        {
+            get;
+            private set;
+        }
+        public static InnerObject Singleton //단일체에 접근하기 위한 속성
+        {
+            get;
+            private set;
+        }
+        static InnerObject() //단일체를 생성하는 정적 메서드
+        {
+            Singleton = new InnerObject();
+        }
+        private InnerObject() //단일체로 구현하기 위해 private으로 접근 지정
+        {
+            Now = 0;
+        }
+        public int PictureCount
+        {
+            get
+            {
+                return memorycard.PictureCount;
+            }
+        }
+
+
+
+
+
+
+        public void PutMemoryCard(MemoryCard memorycard)
+        {
+            this.memorycard = memorycard;
+        }
+        public void StorePicture(string subject)
+        {
+            Now = memorycard.Store(subject);
+        }
+        public string NowPicture //현재 위치의 사진 
+        {
+            get
+            {
+                return memorycard[Now - 1];
+            }
+        }
+        public void MoveBefore() //이전 사진으로 이동
+        {
+            if (Now > 1)
+            {
+                Now--;
+            }
+        }
+        public void MoveNext() //다음 사진으로 이동
+        {
+            if (Now < PictureCount)
+            {
+                Now++;
+            }
+        }
+    }
+}
